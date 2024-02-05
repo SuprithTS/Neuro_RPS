@@ -12,7 +12,7 @@ Press 'a' to start/pause the image collecting process.
 Press 'q' to quit.
 
 '''
-
+ 
 import cv2
 import os
 import sys
@@ -51,17 +51,21 @@ while True:
     if count == num_samples:
         break
 
-    cv2.rectangle(frame, (100, 100), (500, 500), (255, 255, 255), 2)
+    cv2.rectangle(frame, (100, 100), (500, 480), (255, 255, 255), 2)
 
     if start:
+        # Convert the ROI to grayscale
         roi = frame[100:500, 100:500]
+        gray_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+
+        # Save the grayscale image
         save_path = os.path.join(IMG_CLASS_PATH, '{}.jpg'.format(count + 1))
-        cv2.imwrite(save_path, roi)
+        cv2.imwrite(save_path, gray_roi)
         count += 1
 
     font = cv2.FONT_HERSHEY_SIMPLEX
     cv2.putText(frame, "Collecting {}".format(count),
-            (5, 50), font, 0.7, (0, 255, 255), 2, cv2.LINE_AA)
+                (5, 50), font, 0.7, (0, 255, 255), 2, cv2.LINE_AA)
     cv2.imshow("Collecting images", frame)
 
     k = cv2.waitKey(10)
@@ -74,3 +78,4 @@ while True:
 print("\n{} image(s) saved to {}".format(count, IMG_CLASS_PATH))
 cap.release()
 cv2.destroyAllWindows()
+
