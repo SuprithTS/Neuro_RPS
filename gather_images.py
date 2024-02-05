@@ -1,3 +1,6 @@
+import sys
+import os
+import cv2
 desc = '''Script to gather data images with a particular label.
 
 Usage: python gather_images.py <label_name> <num_samples>
@@ -12,10 +15,7 @@ Press 'a' to start/pause the image collecting process.
 Press 'q' to quit.
 
 '''
- 
-import cv2
-import os
-import sys
+
 
 try:
     label_name = sys.argv[1]
@@ -51,11 +51,11 @@ while True:
     if count == num_samples:
         break
 
-    cv2.rectangle(frame, (100, 100), (500, 480), (255, 255, 255), 2)
+    cv2.rectangle(frame, (100, 100), (500, 400), (255, 255, 255), 2)
 
     if start:
         # Convert the ROI to grayscale
-        roi = frame[100:500, 100:500]
+        roi = frame[100:400, 100:500]
         gray_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
 
         # Save the grayscale image
@@ -78,4 +78,3 @@ while True:
 print("\n{} image(s) saved to {}".format(count, IMG_CLASS_PATH))
 cap.release()
 cv2.destroyAllWindows()
-
