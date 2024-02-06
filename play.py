@@ -11,8 +11,10 @@ REV_CLASS_MAP = {
     3: "none"
 }
 
+
 def mapper(val):
     return REV_CLASS_MAP[val]
+
 
 def calculate_winner(move1, move2):
     if move1 == move2:
@@ -36,11 +38,12 @@ def calculate_winner(move1, move2):
         if move2 == "rock":
             return "Computer"
 
+
 model = load_model("rock-paper-scissors-model.h5")
 
 cap = cv2.VideoCapture(0)
-cap.set(3, 1280)  # 3 - PROPERTY index for WIDTH
-cap.set(4, 720)  # 4 - PROPERTY index for HEIGHT
+cap.set(3, 1920)  # 3 - PROPERTY index for WIDTH
+cap.set(4, 1080)  # 4 - PROPERTY index for HEIGHT
 
 prev_move = None
 start_time = time.time()
@@ -66,7 +69,7 @@ while True:
     pred = model.predict(np.array([img]))
     move_code = np.argmax(pred[0])
     user_move_name = mapper(move_code)
-    
+
     # get the confidence for the predicted move
     accuracy_percentage = np.max(pred[0]) * 100
 
